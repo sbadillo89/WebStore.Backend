@@ -1,0 +1,12 @@
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\bin\Debug\netcoreapp3.1\SB.VirtualStore.Data.deps.json
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\bin\Debug\netcoreapp3.1\SB.VirtualStore.Data.dll
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\obj\Debug\netcoreapp3.1\SB.VirtualStore.Data.csprojAssemblyReference.cache
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\obj\Debug\netcoreapp3.1\SB.VirtualStore.Data.AssemblyInfoInputs.cache
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\obj\Debug\netcoreapp3.1\SB.VirtualStore.Data.AssemblyInfo.cs
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\bin\Debug\netcoreapp3.1\SB.VirtualStore.Data.runtimeconfig.json
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\bin\Debug\netcoreapp3.1\SB.VirtualStore.Data.runtimeconfig.dev.json
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\obj\Debug\netcoreapp3.1\SB.VirtualStore.Data.genruntimeconfig.cache
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\bin\Debug\netcoreapp3.1\SB.VirtualStore.Data.pdb
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\obj\Debug\netcoreapp3.1\SB.VirtualStore.Data.dll
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\obj\Debug\netcoreapp3.1\SB.VirtualStore.Data.pdb
+C:\Users\SBadillo\source\repos\SB.VirtualStore\SB.VirtualStore.Data\obj\Debug\netcoreapp3.1\SB.VirtualStore.Data.csproj.CoreCompileInputs.cache
