@@ -68,6 +68,7 @@ namespace SB.VirtualStore
             //Jwt
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secreto);
+            var expirationDate = appSettings.HorasValidezToken;
 
             //Services (Repositories)
             services.AddScoped<IUserService, UserService>();
@@ -91,7 +92,8 @@ namespace SB.VirtualStore
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(key),
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        RequireExpirationTime = false
                     };
                 });
         }

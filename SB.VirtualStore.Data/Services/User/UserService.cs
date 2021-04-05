@@ -53,7 +53,7 @@ namespace SB.VirtualStore.Data.Services
             int validezToken = (_appSettings != null ? _appSettings.HorasValidezToken : 1);
             if (user == null) return null;
             userResponse.Email = user.Email;
-            userResponse.Token = GetToken(user);
+            userResponse.Token = GetToken(user, validezToken);
             userResponse.UserName = user.UserName;
             userResponse.ExpireDate = DateTime.Now.AddHours(validezToken);
             userResponse.IsAdmin = (user.Rol.Name == "Admin" ? true : false);
@@ -83,7 +83,7 @@ namespace SB.VirtualStore.Data.Services
             return Convert.ToBoolean(_appDbContext.SaveChanges());
         }
 
-        private string GetToken(User usuario)
+        private string GetToken(User usuario, int tiempoValidez)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var llave = Encoding.ASCII.GetBytes(_appSettings.Secreto);
@@ -93,10 +93,11 @@ namespace SB.VirtualStore.Data.Services
                     new Claim[]
                     {
                         new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString() ),
-                        new Claim(ClaimTypes.Email, usuario.Email)
+                        new Claim(ClaimTypes.Email, usuario.Email),
+                        new Claim(ClaimTypes.Expiration,DateTime.UtcNow.AddHours(tiempoValidez).ToLongDateString() )
                     }
                     ),
-                Expires = DateTime.UtcNow.AddMinutes(60),
+                Expires = DateTime.UtcNow.AddHours(tiempoValidez),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(llave), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
