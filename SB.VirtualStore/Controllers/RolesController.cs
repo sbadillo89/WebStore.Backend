@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,11 @@ using SB.VirtualStore.Data.Services;
 using SB.VirtualStore.DTO;
 
 namespace SB.VirtualStore.Controllers
-{
+{ 
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [EnableCors("CorsPolicy")]
     public class RolesController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -93,7 +95,8 @@ namespace SB.VirtualStore.Controllers
                 throw;
             }
 
-            return NoContent();
+            //return NoContent();
+            return Ok(roleUpdateDto);
         }
 
         // POST: api/Roles

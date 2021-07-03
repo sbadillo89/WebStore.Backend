@@ -16,9 +16,8 @@ namespace SB.VirtualStore.Data.Models
         [StringLength(100)]
         public string Name { get; set; }
         [StringLength(250)]
-        public string Slogan { get; set; }
-        [MaxLength(1)]
-        public byte[] Logo { get; set; }
+        public string Slogan { get; set; } 
+        public string Logo { get; set; }
         [StringLength(100)]
         public string ContactName { get; set; }
         [StringLength(100)]

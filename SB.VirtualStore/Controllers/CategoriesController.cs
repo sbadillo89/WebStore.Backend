@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SB.VirtualStore.Data.Models;
 using SB.VirtualStore.Data.Models.Response;
 using SB.VirtualStore.Data.Services;
 using SB.VirtualStore.DTO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SB.VirtualStore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+    [EnableCors("CorsPolicy")]
     public class CategoriesController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -70,7 +73,7 @@ namespace SB.VirtualStore.Controllers
                             RequestData = categoryUpdate,
                             ResponseData = null,
                             Status = System.Net.HttpStatusCode.NotFound,
-                            Message = $"There is no category with Id {id}"
+                            Message = $"There is not category with Id {id}"
                         }
                        );
             }
@@ -78,6 +81,7 @@ namespace SB.VirtualStore.Controllers
             { 
                 categoryUpdate.CreatedDate = categoryFromDB.CreatedDate;
                 _mapper.Map(categoryUpdate, categoryFromDB);
+                _categoryService.Update(categoryFromDB);
                 await Task.Run(() =>
                 {
                     _categoryService.SaveChanges(); ;
@@ -89,7 +93,7 @@ namespace SB.VirtualStore.Controllers
             }
 
             //return NoContent();
-            return Ok(categoryUpdate);
+            return Ok(categoryFromDB);
         }
 
         [HttpPost]

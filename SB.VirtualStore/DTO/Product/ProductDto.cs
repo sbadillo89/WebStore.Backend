@@ -11,7 +11,7 @@ namespace SB.VirtualStore.DTO
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public Guid? CategoryId { get; set; }
         public string Reference { get; set; }
         public string Barcode { get; set; }
@@ -20,6 +20,14 @@ namespace SB.VirtualStore.DTO
         public decimal? Discount { get; set; }
         public bool? Active { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public CategoryDto Category { get; set; }
+        public string Color { get; set; }
+
+        public string Talla { get; set; }
+
+        public Guid? GenreId { get; set; }
+
+        public virtual Genre Gender { get; set; }
+
+        public virtual Category Category  { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SB.VirtualStore.Data.Models;
 
 namespace SB.VirtualStore.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210423150437_updateProductImageColumn")]
+    partial class updateProductImageColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,8 +73,9 @@ namespace SB.VirtualStore.Data.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(200)");
 
-                    b.Property<string>("Logo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Logo")
+                        .HasMaxLength(1)
+                        .HasColumnType("varbinary(1)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100)
@@ -87,21 +90,6 @@ namespace SB.VirtualStore.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ConfigurationSite");
-                });
-
-            modelBuilder.Entity("SB.VirtualStore.Data.Models.Genre", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("SB.VirtualStore.Data.Models.Product", b =>
@@ -120,9 +108,6 @@ namespace SB.VirtualStore.Data.Migrations
                     b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Color")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal?>("Cost")
                         .HasColumnType("decimal(12,2)");
 
@@ -138,9 +123,6 @@ namespace SB.VirtualStore.Data.Migrations
 
                     b.Property<decimal?>("Discount")
                         .HasColumnType("decimal(12,2)");
-
-                    b.Property<Guid?>("GenreId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -158,14 +140,9 @@ namespace SB.VirtualStore.Data.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Talla")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("GenreId");
 
                     b.ToTable("Product");
                 });
@@ -271,13 +248,7 @@ namespace SB.VirtualStore.Data.Migrations
                         .HasForeignKey("CategoryId")
                         .HasConstraintName("FK__Product__Categor__6E01572D");
 
-                    b.HasOne("SB.VirtualStore.Data.Models.Genre", "Gender")
-                        .WithMany("Products")
-                        .HasForeignKey("GenreId");
-
                     b.Navigation("Category");
-
-                    b.Navigation("Gender");
                 });
 
             modelBuilder.Entity("SB.VirtualStore.Data.Models.User", b =>
@@ -291,11 +262,6 @@ namespace SB.VirtualStore.Data.Migrations
                 });
 
             modelBuilder.Entity("SB.VirtualStore.Data.Models.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("SB.VirtualStore.Data.Models.Genre", b =>
                 {
                     b.Navigation("Products");
                 });

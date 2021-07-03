@@ -43,7 +43,7 @@ namespace SB.VirtualStore.Data.Services
         {
             UserResponse userResponse = new UserResponse();
 
-            string passwordEncrypt = Encryp.GetSHA256(authRequest.Password);
+            string passwordEncrypt = Encryp.GetSHA256(authRequest.Password); 
 
             var user = _appDbContext.Users.
                         Where(u => u.Email == authRequest.Email && u.Password == passwordEncrypt)
@@ -76,6 +76,21 @@ namespace SB.VirtualStore.Data.Services
 
             newUser.Password = Encryp.GetSHA256(newUser.Password);
             _appDbContext.Users.Add(newUser);
+        }
+
+        public void Create(User newUser)
+        {
+            if (newUser == null)
+                throw new ArgumentNullException(nameof(newUser));
+
+            newUser.Password = Encryp.GetSHA256(newUser.Password);
+
+            _appDbContext.Users.Add(newUser);
+        }
+
+        public void Update(User user)
+        {
+            _appDbContext.Entry(user).State = EntityState.Modified;
         }
 
         public bool SaveChanges()

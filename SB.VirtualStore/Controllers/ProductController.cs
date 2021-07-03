@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SB.VirtualStore.Data.Models;
+using SB.VirtualStore.Data.Models.Response;
 using SB.VirtualStore.Data.Services;
 using SB.VirtualStore.DTO;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks; 
+ 
 namespace SB.VirtualStore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+    [EnableCors("CorsPolicy")]
     public class ProductController : ControllerBase
     {
 
@@ -26,6 +28,7 @@ namespace SB.VirtualStore.Controllers
             _productService = productService;
             _mapper = mapper;
         }
+
         // GET: api/<ProductController>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll()
@@ -64,7 +67,7 @@ namespace SB.VirtualStore.Controllers
         {
             Product newProduct = null;
             try
-            { 
+            {
                 newProduct = _mapper.Map<Product>(productCreateDto);
                 newProduct.Id = Guid.NewGuid();
                 newProduct.Active = true;
@@ -84,10 +87,39 @@ namespace SB.VirtualStore.Controllers
         }
 
         // PUT api/<ProductController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{id:Guid}")]
+        public async Task<ActionResult<ProductDto>> PutAsync(ProductCreateDto product, Guid id)
         {
+            var productFromDB = _productService.GetById(id);
+            if (productFromDB == null)
+            {
+                return NotFound(
+                        new GlobalResponse
+                        {
+                            RequestData = product,
+                            ResponseData = null,
+                            Status = System.Net.HttpStatusCode.NotFound,
+                            Message = $"There is not product with Id {id}"
+                        }
+                       );
+            }
+            try
+            {
+                _mapper.Map(product, productFromDB);
+                _productService.Update(productFromDB);
+                await Task.Run(() =>
+                {
+                    _productService.SaveChanges();
+                });
+            }
+            catch (DbUpdateConcurrencyException ex)
+            { 
+            throw;
+            }
+
+            //return NoContent();
+            return Ok(productFromDB);
         }
-         
+
     }
 }

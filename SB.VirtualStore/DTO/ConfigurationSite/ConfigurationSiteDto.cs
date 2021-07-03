@@ -12,8 +12,8 @@ namespace SB.VirtualStore.DTO
         public string Name { get; set; }
     
         public string Slogan { get; set; }
-    
-        public byte[] Logo { get; set; }
+
+        public string Logo { get; set; }
 
         public string ContactName { get; set; }
       

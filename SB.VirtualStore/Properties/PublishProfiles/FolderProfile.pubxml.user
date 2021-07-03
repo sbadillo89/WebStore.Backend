@@ -6,6 +6,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   <PropertyGroup>
     <_PublishTargetUrl>C:\Publish\VirtualStore_Api</_PublishTargetUrl>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <History>True|2021-06-11T19:41:18.8225810Z;True|2021-05-09T16:03:40.6157251-05:00;True|2021-05-09T15:59:45.3479565-05:00;True|2021-05-09T15:40:19.4494585-05:00;True|2021-05-07T19:10:55.9043317-05:00;True|2021-04-26T17:48:33.3744417-05:00;True|2021-04-26T10:06:20.6759246-05:00;True|2021-04-24T12:30:40.8639581-05:00;True|2021-04-24T11:38:14.6938802-05:00;True|2021-04-23T22:21:26.8712485-05:00;True|2021-04-23T20:49:51.0132543-05:00;True|2021-04-23T10:17:16.7391553-05:00;True|2021-04-22T11:41:39.4525902-05:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <DestinationConnectionStrings Include="AppConnection">

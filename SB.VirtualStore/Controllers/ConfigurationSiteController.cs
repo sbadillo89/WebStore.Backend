@@ -19,12 +19,10 @@ namespace SB.VirtualStore.Controllers
     [Authorize]
     public class ConfigurationSiteController : ControllerBase
     {
-        private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly IConfigurationService _configurationService;
-        public ConfigurationSiteController(AppDbContext context, IMapper mapper, IConfigurationService configurationService)
+        public ConfigurationSiteController(IMapper mapper, IConfigurationService configurationService)
         {
-            _context = context;
             _mapper = mapper;
             _configurationService = configurationService;
         }
@@ -77,7 +75,7 @@ namespace SB.VirtualStore.Controllers
                        );
             }
             try
-            { 
+            {
                 _mapper.Map(configurationSiteUpdateDto, configurationFromDB);
                 await Task.Run(() =>
                 {

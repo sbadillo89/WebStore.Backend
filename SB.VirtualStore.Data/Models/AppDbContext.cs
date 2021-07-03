@@ -22,7 +22,8 @@ namespace SB.VirtualStore.Data.Models
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Provider> Providers { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; } 
+        public virtual DbSet<Genre> Genders { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
@@ -74,10 +75,10 @@ namespace SB.VirtualStore.Data.Models
 
                 entity.Property(e => e.Reference).IsUnicode(false);
 
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__Product__Categor__6E01572D");
+                //entity.HasOne(d => d.Category)
+                //    .WithMany(p => p.Products)
+                //    .HasForeignKey(d => d.CategoryId)
+                //    .HasConstraintName("FK__Product__Categor__6E01572D");
             });
 
             modelBuilder.Entity<Provider>(entity =>

@@ -16,9 +16,8 @@ namespace SB.VirtualStore.DTO
         [Required]
         [StringLength(500)]
         public string Description { get; set; }
-
-        [MaxLength(1)]
-        public byte[] Image { get; set; }
+         
+        public string Image { get; set; }
 
         [Required]
         public Guid? CategoryId { get; set; }
@@ -33,8 +32,16 @@ namespace SB.VirtualStore.DTO
 
         [Required]
         public decimal? Price { get; set; } 
-        public decimal? Discount { get; set; } 
-         
+        public decimal? Discount { get; set; }
+
+        public string Color { get; set; }
+
+        public string Talla { get; set; }
+
+        public Guid? GenreId { get; set; }
+
+        public virtual Genre Gender { get; set; }
+
         public virtual Category Category { get; set; }
 
     }

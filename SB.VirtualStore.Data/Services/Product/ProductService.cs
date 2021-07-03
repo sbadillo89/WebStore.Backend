@@ -19,20 +19,36 @@ namespace SB.VirtualStore.Data.Services
         {
             if (newProduct == null)
                 throw new ArgumentNullException(nameof(newProduct));
-
+         
             _context.Products.Add(newProduct);
         }
 
         public IEnumerable<Product> GetAll()
         { 
-            return _context.Products.
-                    Include( p=> p.Category).ToList();
+            return _context.Products
+                    .Include(p => p.Category)
+                    .Include(g => g.Gender)
+                    .Select(product => new Product()
+                    {
+                        Id= product.Id,
+                        Name= product.Name,
+                        Description= product.Description,
+                        Category= product.Category,
+                        CategoryId= product.CategoryId,
+                        Gender= product.Gender,
+                        GenreId= product.GenreId,
+                        Cost= product.Cost,
+                        Price=product.Price,
+                        Active= product.Active
+                    })
+                    .ToList();
         }
 
         public Product GetById(Guid id)
         {
             return _context.Products
-                    .Include(x=> x.Category)
+                    .Include(x => x.Category)
+                    .Include(g => g.Gender)
                     .FirstOrDefault(x => x.Id == id);
         }
 

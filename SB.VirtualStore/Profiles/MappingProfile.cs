@@ -24,6 +24,9 @@ namespace SB.VirtualStore.Profiles
 
             CreateMap<User, UserDto>();
             CreateMap<UserCreateDto, User>();
+             
+            CreateMap<Genre, GenreDto>();
+            CreateMap<GenreCreateDto, Genre>();
         }
     }
 }

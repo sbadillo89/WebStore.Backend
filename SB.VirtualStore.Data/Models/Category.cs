@@ -13,7 +13,7 @@ namespace SB.VirtualStore.Data.Models
     {
         public Category()
         {
-            Products = new HashSet<Product>();
+            //Products = new HashSet<Product>(); 
         }
 
         [Key]
@@ -25,7 +25,8 @@ namespace SB.VirtualStore.Data.Models
         [Column(TypeName = "datetime")]
         public DateTime? CreatedDate { get; set; }
 
-        [InverseProperty(nameof(Product.Category))]
-        public virtual ICollection<Product> Products { get; set; }
+        //[InverseProperty(nameof(Product.Category))]
+        //public virtual ICollection<Product> Products { get; set; }
+        
     }
 }

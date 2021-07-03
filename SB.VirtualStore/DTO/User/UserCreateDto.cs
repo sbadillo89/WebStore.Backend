@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SB.VirtualStore.Data.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SB.VirtualStore.DTO
 {
@@ -14,6 +13,7 @@ namespace SB.VirtualStore.DTO
         public string Email { get; set; }
         [StringLength(100)]
         public string Password { get; set; }
-        public Guid? RolId { get; set; }  
+        public Guid? RolId { get; set; } 
+        public bool Active { get; set; }
     }
 }

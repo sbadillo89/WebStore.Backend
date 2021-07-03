@@ -24,14 +24,14 @@ namespace SB.VirtualStore.Data.Services
         public IEnumerable<Category> GetAll()
         {
 
-            return _context.Categories.Where(c=> c.Active==true).ToList();
+            return _context.Categories.ToList();
 
         }
 
         public Category GetById(Guid id)
         {
 
-            return _context.Categories.Where(c => c.Active == true).FirstOrDefault(r => r.Id == id);
+            return _context.Categories.FirstOrDefault(r => r.Id == id);
         }
 
         public bool SaveChanges()

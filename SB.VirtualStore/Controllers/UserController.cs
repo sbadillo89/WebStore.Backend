@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SB.VirtualStore.Data.Models;
 using SB.VirtualStore.Data.Models.Request;
 using SB.VirtualStore.Data.Models.Response;
@@ -13,10 +14,10 @@ using SB.VirtualStore.Data.Services;
 using SB.VirtualStore.DTO;
 
 namespace SB.VirtualStore.Controllers
-{
-    [EnableCors("CorsPolicy")]
+{ 
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController] 
+    [EnableCors("CorsPolicy")]
     public class UserController : ControllerBase
     {
         private IMapper _mapper;
@@ -28,7 +29,7 @@ namespace SB.VirtualStore.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllAsync()
         {
             IEnumerable<User> users = null;
 
@@ -41,7 +42,7 @@ namespace SB.VirtualStore.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetById(Guid id)
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetByIdAsync(Guid id)
         {
             User user = null;
 
@@ -77,9 +78,67 @@ namespace SB.VirtualStore.Controllers
             return Ok(response);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<UserDto>> PostAsync(UserCreateDto userCreate)
+        {
+            User newUser;
+            try
+            {
+                newUser = _mapper.Map<User>(userCreate);
+                newUser.Id = Guid.NewGuid();
+                _userService.Create(newUser);
+
+                await Task.Run(() =>
+                {
+                    return _userService.SaveChanges();
+                });
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(Utils.GenerateResponse(userCreate, null, System.Net.HttpStatusCode.BadRequest, ex.Message));
+            }
+            return Ok(newUser);
+        }
+
+        // PUT: api/User/5
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> PutASync(Guid id, UserCreateDto userUpdate)
+        {
+            var userFromDB = _userService.GetById(id);
+            if (userFromDB == null)
+            {
+                return NotFound(
+                                    new GlobalResponse
+                                    {
+                                        RequestData = userUpdate,
+                                        ResponseData = null,
+                                        Status = System.Net.HttpStatusCode.NotFound,
+                                        Message = $"There is no user with Id {id}"
+                                    }
+                                );
+            }
+            _mapper.Map(userUpdate, userFromDB);
+            _userService.Update(userFromDB);
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    _userService.SaveChanges();
+                });
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return Ok(userUpdate);
+        }
+
+
         [HttpPost("Register")]
         public async Task<ActionResult<GlobalResponse>> Register(UserCreateDto newUserDto)
-        { 
+        {
             GlobalResponse response = new GlobalResponse();
             User newUser = new User();
             try

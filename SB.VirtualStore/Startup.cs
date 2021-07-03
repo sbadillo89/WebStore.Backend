@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +13,7 @@ using SB.VirtualStore.Data.Models;
 using SB.VirtualStore.Data.Models.Common;
 using SB.VirtualStore.Data.Services;
 using SB.VirtualStore.Profiles;
+using System.Text;
 
 namespace SB.VirtualStore
 {
@@ -45,14 +41,16 @@ namespace SB.VirtualStore
                 options.AddPolicy(name: MyCors,
                                     builder =>
                                     {
-                                        //builder.WithOrigins("http://localhost:9096/api/user/login", "https://localhost:44316")
-                                        builder.AllowAnyOrigin()
-                                        .AllowAnyHeader()
-                                        .AllowAnyMethod();
+                                        // builder.WithOrigins("http://localhost:44399", "https://localhost:44344").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                                        builder
+                                            .AllowAnyOrigin()
+                                            .AllowAnyMethod()
+                                            .AllowAnyHeader();
                                     });
             });
-            services.AddControllers(option=> option.EnableEndpointRouting= false)
-                                    .AddNewtonsoftJson(opt=> opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);//Agregado desde (option=>)
+
+            services.AddControllers(option => option.EnableEndpointRouting = false)
+                                    .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);//Agregado desde (option=>)
 
             //Mapper
             var mappingConfig = new MapperConfiguration(mc =>
@@ -76,6 +74,7 @@ namespace SB.VirtualStore
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IConfigurationService, ConfigurationService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IGenderService, GenderService>();
 
             //auth
             services.AddAuthentication(d =>
@@ -109,7 +108,7 @@ namespace SB.VirtualStore
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(MyCors);//Agregado
+            app.UseCors(MyCors);//Agregado 
             app.UseAuthentication();/// Agregado
             app.UseAuthorization();
 

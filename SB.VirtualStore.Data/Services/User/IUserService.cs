@@ -11,10 +11,10 @@ namespace SB.VirtualStore.Data.Services
         IEnumerable<User> GetAll();
 
         User GetById(Guid id);
-        UserResponse Auth(AuthRequest  authRequest);
-
+        UserResponse Auth(AuthRequest authRequest);
         void Register(User registerRequest);
-
+        void Create(User user);
+        void Update(User user);
         bool SaveChanges();
     }
 }

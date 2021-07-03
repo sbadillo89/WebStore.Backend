@@ -18,12 +18,12 @@ namespace SB.VirtualStore.Data.Services
         }
         public IEnumerable<Role> GetAllRoles()
         {
-            return _context.Roles.Where(c => c.Active == true).ToList();
+            return _context.Roles.ToList();
         }
 
         public Role GetRoleById(Guid id)
         {
-            return _context.Roles.Where(c => c.Active == true).FirstOrDefault(r => r.Id == id);
+            return _context.Roles.FirstOrDefault(r => r.Id == id);
         }
 
         public void CreateRole(Role role)
